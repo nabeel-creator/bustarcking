@@ -2,11 +2,15 @@
 <html>
 <body style="font-size:22px">
 
-<button onclick="send()">Send to AI</button>
+<button onclick="test()">Send to AI</button>
 
 <script>
-function send(){
-  AppInventor.setWebViewString("hello from web");
+function test(){
+  if (window.AppInventor) {
+    window.AppInventor.setWebViewString("hello from web");
+  } else {
+    document.body.innerHTML += "<p>No AppInventor object!</p>";
+  }
 }
 </script>
 
