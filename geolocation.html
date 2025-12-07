@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Geolocation</title>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendPosition, showError, {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function sendPosition(position) {
+      // Extract location data
+      var lat = position.coords.latitude.toFixed(6);
+      var lon = position.coords.longitude.toFixed(6);
+      var acc = position.coords.accuracy.toFixed(2);
+
+      // Send to App Inventor (IMPORTANT)
+      AppInventor.setWebViewString(lat + "," + lon + "," + acc);
+
+      // Optional debug
+      console.log("Sent: " + lat + "," + lon + "," + acc);
+    }
+
+    function showError(error) {
+      var msg = "";
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          msg = "User denied the request for Geolocation.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          msg = "Location information is unavailable.";
+          break;
+        case error.TIMEOUT:
+          msg = "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          msg = "An unknown error occurred.";
+          break;
+      }
+
+      alert(msg);
+      console.log("GPS Error: " + msg);
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="getLocation()" style="font-size:22px;">📍 Get Current Location</button>
+</body>
+</html>
